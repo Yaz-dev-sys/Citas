@@ -1,77 +1,72 @@
 /*
-    DJANGO Admin styles - Institucional Atizapán de Zaragoza
-    Solo colores institucionales: #4d4383, #6767a5, #56858d, #79b0cc, #b64f80, #585958 + blanco y negro
+    DJANGO Admin styles
 */
 
-/* VARIABLE DEFINITIONS CON SOLO COLORES INSTITUCIONALES */
+/* VARIABLE DEFINITIONS */
 html[data-theme="light"],
 :root {
-    /* Colores institucionales Atizapán de Zaragoza únicamente */
-    --primary: #4d4383;
-    --secondary: #6767a5;
-    --accent: #79b0cc;
-    --accent-alt: #56858d;
-    --accent-pink: #b64f80;
-    --neutral: #585958;
-    --white: #ffffff;
-    --black: #000000;
-    
-    /* Variables del sistema usando solo colores institucionales */
-    --primary-fg: var(--white);
-    --body-fg: var(--black);
-    --body-bg: var(--white);
-    --body-quiet-color: var(--neutral);
-    --body-medium-color: var(--primary);
-    --body-loud-color: var(--black);
+    --primary: #79aec8;
+    --secondary: #417690;
+    --accent: #f5dd5d;
+    --primary-fg: #fff;
 
-    --header-color: var(--white);
+    --body-fg: #333;
+    --body-bg: #fff;
+    --body-quiet-color: #666;
+    --body-medium-color: #444;
+    --body-loud-color: #000;
+
+    --header-color: #ffc;
     --header-branding-color: var(--accent);
-    --header-bg: var(--primary);
-    --header-link-color: var(--white);
+    --header-bg: var(--secondary);
+    --header-link-color: var(--primary-fg);
 
-    --breadcrumbs-fg: var(--white);
-    --breadcrumbs-link-fg: var(--white);
-    --breadcrumbs-bg: var(--accent-alt);
+    --breadcrumbs-fg: #c4dce8;
+    --breadcrumbs-link-fg: var(--body-bg);
+    --breadcrumbs-bg: #264b5d;
 
-    --link-fg: var(--primary);
-    --link-hover-color: var(--secondary);
+    --link-fg: #417893;
+    --link-hover-color: #036;
     --link-selected-fg: var(--secondary);
 
-    --hairline-color: var(--neutral);
-    --border-color: var(--neutral);
+    --hairline-color: #e8e8e8;
+    --border-color: #ccc;
 
-    --error-fg: var(--accent-pink);
+    --error-fg: #ba2121;
 
-    --message-success-bg: var(--white);
-    --message-warning-bg: var(--white);
-    --message-error-bg: var(--white);
+    --message-success-bg: #dfd;
+    --message-warning-bg: #ffc;
+    --message-error-bg: #ffefef;
 
-    --darkened-bg: var(--white);
-    --selected-bg: var(--white);
-    --selected-row: var(--white);
+    --darkened-bg: #f8f8f8; /* A bit darker than --body-bg */
+    --selected-bg: #e4e4e4; /* E.g. selected table cells */
+    --selected-row: #ffc;
 
-    --button-fg: var(--white);
-    --button-bg: var(--primary);
-    --button-hover-bg: var(--secondary);
-    --default-button-bg: var(--secondary);
-    --default-button-hover-bg: var(--primary);
-    --close-button-bg: var(--neutral);
-    --close-button-hover-bg: var(--black);
-    --delete-button-bg: var(--accent-pink);
-    --delete-button-hover-bg: var(--accent-pink);
+    --button-fg: #fff;
+    --button-bg: var(--secondary);
+    --button-hover-bg: #205067;
+    --default-button-bg: #205067;
+    --default-button-hover-bg: var(--secondary);
+    --close-button-bg: #747474;
+    --close-button-hover-bg: #333;
+    --delete-button-bg: #ba2121;
+    --delete-button-hover-bg: #a41515;
 
-    --object-tools-fg: var(--white);
-    --object-tools-bg: var(--neutral);
-    --object-tools-hover-bg: var(--black);
+    --object-tools-fg: var(--button-fg);
+    --object-tools-bg: var(--close-button-bg);
+    --object-tools-hover-bg: var(--close-button-hover-bg);
 
     --font-family-primary:
-        "Poppins",
         "Segoe UI",
         system-ui,
         Roboto,
         "Helvetica Neue",
         Arial,
-        sans-serif;
+        sans-serif,
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol",
+        "Noto Color Emoji";
     --font-family-monospace:
         ui-monospace,
         Menlo,
@@ -85,7 +80,11 @@ html[data-theme="light"],
         "Fira Mono",
         "Droid Sans Mono",
         "Courier New",
-        monospace;
+        monospace,
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol",
+        "Noto Color Emoji";
 
     color-scheme: light;
 }
@@ -104,6 +103,7 @@ body {
 }
 
 /* LINKS */
+
 a:link, a:visited {
     color: var(--link-fg);
     text-decoration: none;
@@ -132,6 +132,7 @@ a.section:focus, a.section:hover {
 }
 
 /* GLOBAL DEFAULTS */
+
 p, ol, ul, dl {
     margin: .2em 0 .8em 0;
 }
@@ -147,15 +148,13 @@ h1,h2,h3,h4,h5 {
 
 h1 {
     margin: 0 0 20px;
-    font-weight: 600;
+    font-weight: 300;
     font-size: 1.25rem;
-    color: var(--primary);
 }
 
 h2 {
     font-size: 1rem;
     margin: 1em 0 .5em 0;
-    color: var(--primary);
 }
 
 h2.subhead {
@@ -227,10 +226,10 @@ details summary {
 
 blockquote {
     font-size: 0.6875rem;
-    color: var(--body-quiet-color);
+    color: #777;
     margin-left: 2px;
     padding-left: 10px;
-    border-left: 5px solid var(--accent);
+    border-left: 5px solid #ddd;
 }
 
 code, pre {
@@ -244,11 +243,10 @@ pre.literal-block {
     margin: 10px;
     background: var(--darkened-bg);
     padding: 6px 8px;
-    border-left: 3px solid var(--accent);
 }
 
 code strong {
-    color: var(--primary);
+    color: #930;
 }
 
 hr {
@@ -263,6 +261,7 @@ hr {
 }
 
 /* TEXT STYLES & MODIFIERS */
+
 .small {
     font-size: 0.6875rem;
 }
@@ -306,6 +305,7 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
 }
 
 /* TABLES */
+
 table {
     border-collapse: collapse;
     border-color: var(--border-color);
@@ -320,9 +320,8 @@ td, th {
 }
 
 th {
-    font-weight: 600;
+    font-weight: 500;
     text-align: left;
-    color: var(--primary);
 }
 
 thead th,
@@ -343,7 +342,6 @@ tfoot td {
 
 thead th.required {
     font-weight: bold;
-    color: var(--primary);
 }
 
 tr.alt {
@@ -362,13 +360,12 @@ tr:nth-child(odd) + .row-form-errors .errorlist {
 }
 
 /* SORTABLE TABLES */
+
 thead th {
     padding: 5px 10px;
     line-height: normal;
     text-transform: uppercase;
     background: var(--darkened-bg);
-    color: var(--primary);
-    font-weight: 600;
 }
 
 thead th a:link, thead th a:visited {
@@ -422,7 +419,60 @@ table thead th.sorted .sortpriority {
     margin-right: 2px;
 }
 
+table thead th.sorted .sortoptions a {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background: url(../img/sorting-icons.svg) 0 0 no-repeat;
+    background-size: 14px auto;
+}
+
+table thead th.sorted .sortoptions a.sortremove {
+    background-position: 0 0;
+}
+
+table thead th.sorted .sortoptions a.sortremove:after {
+    content: '\\';
+    position: absolute;
+    top: -6px;
+    left: 3px;
+    font-weight: 200;
+    font-size: 1.125rem;
+    color: var(--body-quiet-color);
+}
+
+table thead th.sorted .sortoptions a.sortremove:focus:after,
+table thead th.sorted .sortoptions a.sortremove:hover:after {
+    color: var(--link-fg);
+}
+
+table thead th.sorted .sortoptions a.sortremove:focus,
+table thead th.sorted .sortoptions a.sortremove:hover {
+    background-position: 0 -14px;
+}
+
+table thead th.sorted .sortoptions a.ascending {
+    background-position: 0 -28px;
+}
+
+table thead th.sorted .sortoptions a.ascending:focus,
+table thead th.sorted .sortoptions a.ascending:hover {
+    background-position: 0 -42px;
+}
+
+table thead th.sorted .sortoptions a.descending {
+    top: 1px;
+    background-position: 0 -56px;
+}
+
+table thead th.sorted .sortoptions a.descending:focus,
+table thead th.sorted .sortoptions a.descending:hover {
+    background-position: 0 -70px;
+}
+
 /* FORM DEFAULTS */
+
 input, textarea, select, .form-row p, form .button {
     margin: 2px 0;
     padding: 2px 3px;
@@ -431,7 +481,6 @@ input, textarea, select, .form-row p, form .button {
     font-weight: normal;
     font-size: 0.8125rem;
 }
-
 .form-row div.help {
     padding: 2px 3px;
 }
@@ -440,6 +489,10 @@ textarea {
     vertical-align: top;
 }
 
+/*
+Minifiers remove the default (text) "type" attribute from "input" HTML tags.
+Add input:not([type]) to make the CSS stylesheet work the same.
+*/
 input:not([type]), input[type=text], input[type=password], input[type=email],
 input[type=url], input[type=number], input[type=tel], textarea, select,
 .vTextField {
@@ -449,13 +502,16 @@ input[type=url], input[type=number], input[type=tel], textarea, select,
     margin-top: 0;
     color: var(--body-fg);
     background-color: var(--body-bg);
-    transition: border-color 0.15s ease;
 }
 
+/*
+Minifiers remove the default (text) "type" attribute from "input" HTML tags.
+Add input:not([type]) to make the CSS stylesheet work the same.
+*/
 input:not([type]):focus, input[type=text]:focus, input[type=password]:focus,
 input[type=email]:focus, input[type=url]:focus, input[type=number]:focus,
 input[type=tel]:focus, textarea:focus, select:focus, .vTextField:focus {
-    border-color: var(--primary);
+    border-color: var(--body-quiet-color);
 }
 
 select {
@@ -463,11 +519,13 @@ select {
 }
 
 select[multiple] {
+    /* Allow HTML size attribute to override the height in the rule above. */
     height: auto;
     min-height: 150px;
 }
 
 /* FORM BUTTONS */
+
 .button, input[type=submit], input[type=button], .submit-row input, a.button {
     background: var(--button-bg);
     padding: 10px 15px;
@@ -476,7 +534,6 @@ select[multiple] {
     color: var(--button-fg);
     cursor: pointer;
     transition: background 0.15s;
-    font-weight: 500;
 }
 
 a.button {
@@ -495,7 +552,7 @@ a.button {
 
 .button.default, input[type=submit].default, .submit-row input.default {
     border: none;
-    font-weight: 600;
+    font-weight: 400;
     background: var(--default-button-bg);
 }
 
@@ -511,14 +568,13 @@ input[type=button][disabled].default {
     opacity: 0.4;
 }
 
+
 /* MODULES */
+
 .module {
     border: none;
     margin-bottom: 30px;
     background: var(--body-bg);
-    border: 1px solid var(--hairline-color);
-    border-radius: 6px;
-    overflow: hidden;
 }
 
 .module p, .module ul, .module h3, .module h4, .module dl, .module pre {
@@ -540,14 +596,12 @@ input[type=button][disabled].default {
 
 .module h2, .module caption, .inline-group h2 {
     margin: 0;
-    padding: 12px 16px;
-    font-weight: 600;
+    padding: 8px;
+    font-weight: 400;
     font-size: 0.8125rem;
     text-align: left;
-    background: var(--primary);
+    background: var(--header-bg);
     color: var(--header-link-color);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .module caption,
@@ -562,6 +616,7 @@ input[type=button][disabled].default {
 }
 
 /* MESSAGES & ERRORS */
+
 ul.messagelist {
     padding: 0;
     margin: 0;
@@ -569,25 +624,24 @@ ul.messagelist {
 
 ul.messagelist li {
     display: block;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 0.8125rem;
-    padding: 15px 15px 15px 50px;
+    padding: 10px 10px 10px 65px;
     margin: 0 0 10px 0;
-    background: var(--message-success-bg);
+    background: var(--message-success-bg) url(../img/icon-yes.svg) 40px 12px no-repeat;
+    background-size: 16px auto;
     color: var(--body-fg);
     word-break: break-word;
-    border-left: 4px solid var(--accent-alt);
-    border-radius: 4px;
 }
 
 ul.messagelist li.warning {
-    background: var(--message-warning-bg);
-    border-left-color: var(--accent);
+    background: var(--message-warning-bg) url(../img/icon-alert.svg) 40px 14px no-repeat;
+    background-size: 14px auto;
 }
 
 ul.messagelist li.error {
-    background: var(--message-error-bg);
-    border-left-color: var(--error-fg);
+    background: var(--message-error-bg) url(../img/icon-no.svg) 40px 12px no-repeat;
+    background-size: 16px auto;
 }
 
 .errornote {
@@ -658,13 +712,13 @@ td ul.errorlist + input, td ul.errorlist + select, td ul.errorlist + textarea {
 }
 
 /* BREADCRUMBS */
+
 div.breadcrumbs {
     background: var(--breadcrumbs-bg);
-    padding: 12px 40px;
+    padding: 10px 40px;
     border: none;
     color: var(--breadcrumbs-fg);
     text-align: left;
-    font-weight: 500;
 }
 
 div.breadcrumbs a {
@@ -676,36 +730,43 @@ div.breadcrumbs a:focus, div.breadcrumbs a:hover {
 }
 
 /* ACTION ICONS */
+
 .viewlink, .inlineviewlink {
     padding-left: 16px;
+    background: url(../img/icon-viewlink.svg) 0 1px no-repeat;
 }
 
 .hidelink {
     padding-left: 16px;
+    background: url(../img/icon-hidelink.svg) 0 1px no-repeat;
 }
 
 .addlink {
     padding-left: 16px;
+    background: url(../img/icon-addlink.svg) 0 1px no-repeat;
 }
 
 .changelink, .inlinechangelink {
     padding-left: 16px;
+    background: url(../img/icon-changelink.svg) 0 1px no-repeat;
 }
 
 .deletelink {
     padding-left: 16px;
+    background: url(../img/icon-deletelink.svg) 0 1px no-repeat;
 }
 
 a.deletelink:link, a.deletelink:visited {
-    color: var(--delete-button-bg);
+    color: #CC3434; /* XXX Probably unused? */
 }
 
 a.deletelink:focus, a.deletelink:hover {
-    color: var(--delete-button-hover-bg);
+    color: #993333; /* XXX Probably unused? */
     text-decoration: none;
 }
 
 /* OBJECT TOOLS */
+
 .object-tools {
     font-size: 0.625rem;
     font-weight: bold;
@@ -729,10 +790,10 @@ a.deletelink:focus, a.deletelink:hover {
 .object-tools a:link, .object-tools a:visited {
     display: block;
     float: left;
-    padding: 6px 15px;
+    padding: 3px 12px;
     background: var(--object-tools-bg);
     color: var(--object-tools-fg);
-    font-weight: 500;
+    font-weight: 400;
     font-size: 0.6875rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -752,7 +813,16 @@ a.deletelink:focus, a.deletelink:hover {
     padding-right: 26px;
 }
 
+.object-tools a.viewsitelink {
+    background-image: url(../img/tooltag-arrowright.svg);
+}
+
+.object-tools a.addlink {
+    background-image: url(../img/tooltag-add.svg);
+}
+
 /* OBJECT HISTORY */
+
 #change-history table {
     width: 100%;
 }
@@ -769,6 +839,7 @@ a.deletelink:focus, a.deletelink:hover {
 }
 
 /* PAGE STRUCTURE */
+
 #container {
     position: relative;
     width: 100%;
@@ -823,7 +894,14 @@ a.deletelink:focus, a.deletelink:hover {
     margin-right: -300px;
 }
 
+@media (forced-colors: active) {
+  #content-related {
+      border: 1px solid;
+  }
+}
+
 /* COLUMN TYPES */
+
 .colMS {
     margin-right: 300px;
 }
@@ -847,14 +925,15 @@ a.deletelink:focus, a.deletelink:hover {
 }
 
 /* HEADER */
+
 #header {
     width: auto;
     height: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
-    background: var(--primary);
+    padding: 10px 40px;
+    background: var(--header-bg);
     color: var(--header-color);
 }
 
@@ -866,16 +945,21 @@ a.deletelink:focus, a.deletelink:hover {
     text-decoration: underline;
 }
 
+@media (forced-colors: active) {
+  #header {
+      border-bottom: 1px solid;
+  }
+}
+
 #branding {
     display: flex;
-    align-items: center;
 }
 
 #site-name {
     padding: 0;
     margin: 0;
     margin-inline-end: 20px;
-    font-weight: 600;
+    font-weight: 300;
     font-size: 1.5rem;
     color: var(--header-branding-color);
 }
@@ -915,14 +999,14 @@ a.deletelink:focus, a.deletelink:hover {
 
 #user-tools, #logout-form button{
     padding: 0;
-    font-weight: 500;
+    font-weight: 300;
     font-size: 0.6875rem;
     letter-spacing: 0.5px;
     text-transform: uppercase;
 }
 
 #user-tools a, #logout-form button {
-    border-bottom: 1px solid var(--white);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 #user-tools a:focus, #user-tools a:hover,
@@ -936,10 +1020,9 @@ a.deletelink:focus, a.deletelink:hover {
 }
 
 /* SIDEBAR */
+
 #content-related {
     background: var(--darkened-bg);
-    border-radius: 6px;
-    margin-top: 10px;
 }
 
 #content-related .module {
@@ -954,7 +1037,6 @@ a.deletelink:focus, a.deletelink:hover {
 
 #content-related h4 {
     font-size: 0.8125rem;
-    color: var(--primary);
 }
 
 #content-related p {
@@ -974,13 +1056,12 @@ a.deletelink:focus, a.deletelink:hover {
 }
 
 #content-related .module h2 {
-    background: var(--primary);
+    background: none;
     padding: 16px;
     margin-bottom: 16px;
     border-bottom: 1px solid var(--hairline-color);
     font-size: 1.125rem;
-    color: var(--header-link-color);
-    font-weight: 600;
+    color: var(--body-fg);
 }
 
 .delete-confirmation form input[type="submit"] {
@@ -1028,6 +1109,7 @@ a.deletelink:focus, a.deletelink:hover {
 }
 
 /* PAGINATOR */
+
 .paginator {
     display: flex;
     align-items: center;
@@ -1043,12 +1125,10 @@ a.deletelink:focus, a.deletelink:hover {
 }
 
 .paginator a:link, .paginator a:visited {
-    padding: 6px 12px;
+    padding: 2px 6px;
     background: var(--button-bg);
     text-decoration: none;
     color: var(--button-fg);
-    border-radius: 4px;
-    font-weight: 500;
 }
 
 .paginator a.showall {
@@ -1067,29 +1147,19 @@ a.deletelink:focus, a.deletelink:hover {
 }
 
 .paginator .this-page {
-    padding: 6px 12px;
+    padding: 2px 6px;
     font-weight: bold;
     font-size: 0.8125rem;
     vertical-align: top;
-    background: var(--selected-bg);
-    color: var(--primary);
-    border-radius: 4px;
 }
 
 .paginator a:focus, .paginator a:hover {
-    color: var(--white);
+    color: white;
     background: var(--link-hover-color);
 }
 
 .paginator input {
     margin-left: auto;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 4px 8px;
-}
-
-.paginator input:focus {
-    border-color: var(--primary);
 }
 
 .base-svgs {
@@ -1107,51 +1177,4 @@ a.deletelink:focus, a.deletelink:hover {
     border: 0;
     color: var(--body-fg);
     background-color: var(--body-bg);
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    #header {
-        padding: 10px 20px;
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    #site-name {
-        font-size: 1.2rem;
-        margin-inline-end: 0;
-        margin-bottom: 5px;
-    }
-    
-    #user-tools {
-        float: none;
-        margin: 0;
-        text-align: center;
-    }
-    
-    #content {
-        padding: 15px 20px;
-    }
-    
-    .object-tools {
-        position: static;
-        float: none;
-        margin: 10px 0;
-        text-align: center;
-    }
-    
-    .object-tools li {
-        float: none;
-        display: inline-block;
-        margin: 5px;
-    }
-    
-    .dashboard #content {
-        width: auto;
-    }
-    
-    .paginator {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
 }

@@ -5,3 +5,4 @@ mysql-connector-python==8.3.0
 packaging==25.0
 PyMySQL==1.1.0
 sqlparse==0.5.3
+whitenoise==6.9.0
