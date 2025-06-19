@@ -993,7 +993,7 @@ function imprimirComprobante() {
 
     img.onload = function () {
         // Logo
-        doc.addImage(img, 'PNG', 15, 7, 70, 20);
+        doc.addImage(img, 'PNG', 15, 7, 83, 20);
 
         // Línea separadora
         doc.setDrawColor(200);
@@ -1013,8 +1013,7 @@ function imprimirComprobante() {
         // Código de confirmación
         doc.setFontSize(14);
         doc.setTextColor(70, 70, 70);
-        doc.text(`Código de confirmación: ${codigoConfirmacion}`, 105, 62, null, null, 'center');
-
+ 
         // Línea divisoria
         doc.setDrawColor(180);
         doc.line(10, 68, 200, 68);
