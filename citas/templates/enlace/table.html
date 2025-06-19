@@ -1,0 +1,526 @@
+<!-- templates/enlace/citas.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gestión de Citas | Atizapán de Zaragoza{% endblock %}
+{% block extra_css %}
+<style>
+    .estado-select {
+        padding: 8px 15px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 12px;
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        outline: none;
+        text-align: center;
+        min-width: 110px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        background-size: 16px;
+        padding-right: 35px;
+    }
+
+    .estado-select:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .estado-select:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(102, 35, 146, 0.2);
+        transform: translateY(-1px);
+    }
+
+    .estado-select.pendiente {
+        background: linear-gradient(135deg, #ffeb3b 0%, #ffc107 100%);
+        color: #333;
+        border-color: #ff9800;
+    }
+
+    .estado-select.completada {
+        background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+        color: white;
+        border-color: #1b5e20;
+    }
+
+    .estado-select.asistida {
+        background: linear-gradient(135deg, #2196f3 0%, #1565c0 100%);
+        color: white;
+        border-color: #0d47a1;
+    }
+
+    .estado-select.cancelada {
+        background: linear-gradient(135deg, #f44336 0%, #c62828 100%);
+        color: white;
+        border-color: #b71c1c;
+    }
+
+    /* Estilos para la tabla mejorados */
+    .tabla-citas {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .tabla-citas thead tr {
+        background: linear-gradient(140deg, #662392 0%, #20a6db 100%);
+        color: white;
+    }
+
+    .tabla-citas th {
+        padding: 18px 15px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .tabla-citas th:first-child {
+        border-radius: 10px 0 0 0;
+    }
+
+    .tabla-citas th:last-child {
+        border-radius: 0 10px 0 0;
+    }
+
+    .tabla-citas tbody tr {
+        border-bottom: 1px solid #f0f0f0;
+        transition: all 0.3s ease;
+    }
+
+    .tabla-citas tbody tr:hover {
+        background-color: #f8f9ff;
+        transform: scale(1.01);
+    }
+
+    .tabla-citas tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .tabla-citas td {
+        padding: 15px;
+        vertical-align: middle;
+        font-size: 14px;
+        color: #444;
+    }
+
+    .tabla-citas .td-id {
+        font-weight: 600;
+        color: #662392;
+    }
+
+    .tabla-citas .td-fecha,
+    .tabla-citas .td-hora {
+        color: #666;
+    }
+
+    .estado-form {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Responsive para la tabla */
+    .tabla-container {
+        overflow-x: auto;
+        margin: 40px auto;
+        max-width: 1200px;
+        padding: 0 20px;
+    }
+
+    @media (max-width: 768px) {
+        .tabla-citas th,
+        .tabla-citas td {
+            padding: 12px 8px;
+            font-size: 12px;
+        }
+        
+        .estado-select {
+            min-width: 90px;
+            font-size: 10px;
+            padding: 6px 12px;
+        }
+
+        .input-comentario {
+            font-size: 11px;
+            padding: 6px 8px;
+        }
+    }
+
+    /* Animación para cambios de estado */
+    .estado-select option {
+        padding: 8px;
+        font-weight: 600;
+        background: white;
+        color: #333;
+    }
+
+    /* Mensaje vacío mejorado */
+    .mensaje-vacio {
+        padding: 40px 20px;
+        text-align: center;
+        color: #999;
+        font-style: italic;
+        background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+        border-radius: 10px;
+        margin: 20px;
+    }
+
+    /* Estilos mejorados para comentarios */
+    .input-comentario {
+        width: 100%;
+        padding: 10px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 13px;
+        background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        transition: all 0.3s ease;
+        resize: none;
+        min-height: 40px;
+        font-family: inherit;
+        color: #444;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .input-comentario:focus {
+        outline: none;
+        border-color: #662392;
+        background: linear-gradient(145deg, #ffffff 0%, #f0f4ff 100%);
+        box-shadow: 0 0 0 3px rgba(102, 35, 146, 0.1), 0 4px 8px rgba(0,0,0,0.1);
+        transform: translateY(-1px);
+    }
+
+    .input-comentario:hover {
+        border-color: #20a6db;
+        background: linear-gradient(145deg, #ffffff 0%, #f8fcff 100%);
+    }
+
+    .input-comentario::placeholder {
+        color: #999;
+        font-style: italic;
+    }
+
+    /* Botón de guardar mejorado */
+    .btn-guardar {
+        background: linear-gradient(140deg, #662392 0%, #20a6db 100%);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 15px 40px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 30px auto;
+        display: block;
+        box-shadow: 0 4px 15px rgba(102, 35, 146, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-guardar:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 35, 146, 0.4);
+        opacity: 0.95;
+    }
+
+    .btn-guardar:active {
+        transform: translateY(0);
+    }
+
+    .btn-guardar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .btn-guardar:hover::before {
+        left: 100%;
+    }
+
+    /* Estilos para indicar cambios no guardados */
+    .changed-row {
+        background: linear-gradient(90deg, #fff8e1 0%, #ffffff 100%);
+        border-left: 4px solid #ff9800;
+    }
+
+    /* Contador de cambios */
+    .changes-counter {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+        display: none;
+        z-index: 1000;
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-10px); }
+        60% { transform: translateY(-5px); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-texts">
+        <h1 class="hero-title">Gestión de Citas</h1>
+        <h2 class="hero-subtitle">{{ area.nombre_area }}</h2>
+    </div>
+</div>
+
+<div class="creative-separator">
+    <div class="wave-separator"></div>
+    <div class="separator-text">Citas Programadas</div>
+</div>
+
+<div class="areas-section">
+    <div class="services-title">Total de Citas: {{ citas.count }}</div>
+    
+    <form id="form-citas" method="POST" action="{% url 'actualizar_estado_cita' %}">
+        {% csrf_token %}
+        <!-- Tabla de citas mejorada -->
+        <div class="tabla-container">
+            <table class="tabla-citas">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Comentarios</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cita in citas %}
+                    <tr data-cita-id="{{ cita.id_cita }}">
+                        <td class="td-id">
+                            {{ cita.id_cita }}
+                        </td>
+                        <td class="td-fecha">{{ cita.fecha|date:"d/m/Y" }}</td>
+                        <td class="td-hora">{{ cita.hora|time:"H:i" }}</td>
+                        <td>
+                            <input type="text" 
+                                   name="comentarios_{{ cita.id_cita }}" 
+                                   value="{{ cita.comentarios|default_if_none:'' }}" 
+                                   class="input-comentario"
+                                   placeholder="Añadir comentario..."
+                                   data-original-value="{{ cita.comentarios|default_if_none:'' }}">
+                        </td>
+                        <td>
+                            <select name="estado_{{ cita.id_cita }}" 
+                                    class="estado-select {{ cita.estado|lower }}"
+                                    data-original-value="{{ cita.estado }}">
+                                <option value="pendiente" {% if cita.estado == 'pendiente' %}selected{% endif %}>Pendiente</option>
+                                <option value="asistida" {% if cita.estado == 'asistida' %}selected{% endif %}>Asistida</option>
+                                <option value="completada" {% if cita.estado == 'completada' %}selected{% endif %}>Completada</option>
+                                <option value="cancelada" {% if cita.estado == 'cancelada' %}selected{% endif %}>Cancelada</option>
+                            </select>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="mensaje-vacio">
+                            <i class="fas fa-calendar-times" style="font-size: 2rem; margin-bottom: 10px; color: #ccc;"></i><br>
+                            No hay citas programadas para esta área.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        {% if citas %}
+        <!-- Botón guardar solo si hay citas -->
+        <button type="submit" class="btn-guardar">
+            <i class="fas fa-save" style="margin-right: 8px;"></i>
+            Guardar Cambios
+        </button>
+        {% endif %}
+    </form>
+</div>
+
+<!-- Contador de cambios -->
+<div id="changes-counter" class="changes-counter">
+    <i class="fas fa-exclamation-circle" style="margin-right: 5px;"></i>
+    <span id="changes-count">0</span> cambios sin guardar
+</div>
+<!-- Asegúrate de tener SweetAlert2 cargado -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let changesCount = 0;
+    let isSubmitting = false; // Nueva variable para controlar el envío
+    const changesCounter = document.getElementById('changes-counter');
+    const changesCountSpan = document.getElementById('changes-count');
+    
+    // Función para actualizar contador de cambios
+    function updateChangesCounter() {
+        changesCountSpan.textContent = changesCount;
+        if (changesCount > 0) {
+            changesCounter.style.display = 'block';
+        } else {
+            changesCounter.style.display = 'none';
+        }
+    }
+    
+    // Función para marcar fila como cambiada
+    function markRowAsChanged(element) {
+        const row = element.closest('tr');
+        if (!row.classList.contains('changed-row')) {
+            row.classList.add('changed-row');
+            changesCount++;
+            updateChangesCounter();
+        }
+    }
+    
+    // Función para desmarcar fila como cambiada
+    function unmarkRowAsChanged(element) {
+        const row = element.closest('tr');
+        if (row.classList.contains('changed-row')) {
+            row.classList.remove('changed-row');
+            changesCount--;
+            updateChangesCounter();
+        }
+    }
+    
+    // Cambiar color del select según el estado seleccionado
+    const selects = document.querySelectorAll('.estado-select');
+    
+    selects.forEach(select => {
+        select.addEventListener('change', function() {
+            // Remover todas las clases de estado
+            this.classList.remove('pendiente', 'asistida', 'completada', 'cancelada');
+            // Agregar la clase del nuevo estado
+            this.classList.add(this.value);
+            
+            // Verificar si cambió respecto al valor original
+            const originalValue = this.getAttribute('data-original-value');
+            if (this.value !== originalValue) {
+                markRowAsChanged(this);
+            } else {
+                // Verificar si el comentario también está sin cambios
+                const row = this.closest('tr');
+                const comentarioInput = row.querySelector('.input-comentario');
+                const comentarioOriginal = comentarioInput.getAttribute('data-original-value');
+                if (comentarioInput.value === comentarioOriginal) {
+                    unmarkRowAsChanged(this);
+                }
+            }
+        });
+    });
+
+    // Manejar cambios en comentarios
+    const comentarioInputs = document.querySelectorAll('.input-comentario');
+    comentarioInputs.forEach(input => {
+        // Auto-resize
+        function adjustHeight() {
+            input.style.height = 'auto';
+            input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+        }
+        
+        adjustHeight();
+        input.addEventListener('input', function() {
+            adjustHeight();
+            
+            // Verificar cambios
+            const originalValue = this.getAttribute('data-original-value');
+            if (this.value !== originalValue) {
+                markRowAsChanged(this);
+            } else {
+                // Verificar si el estado también está sin cambios
+                const row = this.closest('tr');
+                const estadoSelect = row.querySelector('.estado-select');
+                const estadoOriginal = estadoSelect.getAttribute('data-original-value');
+                if (estadoSelect.value === estadoOriginal) {
+                    unmarkRowAsChanged(this);
+                }
+            }
+        });
+        
+        // Efecto de enfoque mejorado
+        input.addEventListener('focus', function() {
+            this.style.transform = 'translateY(-1px)';
+        });
+        
+        input.addEventListener('blur', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+
+    // Confirmación antes de guardar
+    const form = document.getElementById('form-citas');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            if (changesCount === 0) {
+                alert('No hay cambios para guardar.');
+                e.preventDefault();
+                return;
+            }
+            
+            e.preventDefault(); // Evita el envío automático
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: `¿Deseas guardar ${changesCount} cambio${changesCount > 1 ? 's' : ''}?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, guardar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // CAMBIO: Marcar que se está enviando el formulario
+                    isSubmitting = true;
+                    // Resetear contador para evitar mensaje de salida
+                    changesCount = 0;
+                    updateChangesCounter();
+                    // Envía el formulario manualmente si el usuario confirma
+                    e.target.submit();
+                }
+            });
+        });
+    }
+    
+    // CAMBIO: Advertencia antes de salir solo si NO se está enviando el formulario
+    window.addEventListener('beforeunload', function(e) {
+        if (changesCount > 0 && !isSubmitting) {
+            e.preventDefault();
+            e.returnValue = 'Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?';
+            return 'Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?';
+        }
+    });
+
+    // NUEVA FUNCIONALIDAD: Resetear la variable isSubmitting si la página no se recarga
+    // (por ejemplo, si hay un error en el servidor)
+    setTimeout(function() {
+        if (isSubmitting) {
+            isSubmitting = false;
+        }
+    }, 5000); // Resetear después de 5 segundos
+});
+</script>
+{% endblock %}

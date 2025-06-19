@@ -1,0 +1,748 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Trámites de {{ nombre_area|default:"Área desconocida" }} | Atizapán de Zaragoza{% endblock %}
+
+{% block content %}
+<!-- Hero section -->
+<section class="hero-section">
+    <div class="hero-texts">
+        <h1 class="hero-title">TRÁMITES DISPONIBLES</h1>
+        <h2 class="hero-subtitle">EN {{ nombre_area|upper }}</h2>
+
+        <!-- Botón de preguntas frecuentes -->
+        <a href="#" class="faq-button" id="faq-button">Preguntas Frecuentes</a>
+    </div>
+</section>
+
+<!-- Separador -->
+<div class="creative-separator">
+    <div class="wave-separator"></div>
+    <div class="separator-text">Selecciona el trámite</div>
+</div>
+
+<!-- Grid de trámites -->
+<section class="areas-section">
+    <div class="areas-grid">
+        {% for tramite in tramites %}
+        <form action="{% url 'TramitesCita' %}" method="post" class="area-container">
+            {% csrf_token %}
+            <input type="hidden" name="cookie" value="{{ tramite.id_tramite }}">
+            <button type="submit" class="area-item" style="border:none; background:none; width:100%; cursor:pointer;">
+                <span class="area-title">{{ tramite.nombre_tramite|upper }}</span>
+            </button>
+        </form>        
+        {% empty %}
+        <p style="text-align:center; font-weight:bold;">No se encontraron trámites para esta área.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Modal de Preguntas Frecuentes -->
+<div class="modal-overlay" id="faq-modal">
+    <div class="modal-container">
+        <!-- Header del modal -->
+        <div class="modal-header">
+            <h2 class="modal-title">Preguntas Frecuentes</h2>
+            <p class="modal-subtitle">Sistema de Citas - Atizapán de Zaragoza</p>
+            <button class="close-button" id="close-modal">&times;</button>
+        </div>
+
+        <!-- Contenido del modal -->
+        <div class="modal-content">
+            <div class="faq-accordion">
+                
+                <!-- Pregunta 1 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>1. ¿Qué es el sistema de citas de Atizapán de Zaragoza?</span>
+                        <i class="faq-icon">+</i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Es una plataforma en línea que permite a los ciudadanos agendar citas para realizar trámites y servicios en las diferentes oficinas del Ayuntamiento.</p>
+                    </div>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>2. ¿Para qué sirve el sistema de citas de Atizapán de Zaragoza?</span>
+                        <i class="faq-icon">+</i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Para agendar citas de forma rápida y sencilla, evitando filas y esperas en las oficinas del Ayuntamiento.</p>
+                    </div>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>3. ¿Cómo puedo acceder al sistema de citas de Atizapán de Zaragoza?</span>
+                        <i class="faq-icon">+</i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Puedes acceder al sistema de citas a través del sitio web: <a href="https://citas.atizapan.gob.mx/" target="_blank">https://citas.atizapan.gob.mx</a></p>
+                    </div>
+                </div>
+
+                <!-- Pregunta 4 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>4. ¿Qué trámites y servicios puedo realizar con el sistema de citas?</span>
+                        <i class="faq-icon">+</i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Puedes consultar la lista completa de trámites y servicios disponibles en el sitio web del sistema de citas. Algunos de los trámites más comunes son:</p>
+                        <ul>
+                            <li><strong>Registro Civil:</strong> Actas de nacimiento, matrimonio, defunción, etc.</li>
+                            <li><strong>Tesorería:</strong> Pago de predial, agua potable, multas de tránsito, etc.</li>
+                            <li><strong>Desarrollo Urbano:</strong> Licencias de construcción, permisos de negocio, etc.</li>
+                            <li><strong>DIF:</strong> Atención a grupos vulnerables, programas sociales, etc.</li>
+                            <li><strong>Seguridad Pública:</strong> Trámites relacionados con seguridad pública.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Pregunta 5 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>5. ¿Cómo puedo agendar una cita en el sistema?</span>
+                        <i class="faq-icon">+</i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Pasos para realizar una cita en el sistema de citas de Atizapán de Zaragoza:</p>
+                        <ol>
+                            <li><strong>Accede al sitio web:</strong><br>
+                                Sitio web: <a href="https://citas.atizapan.gob.mx/" target="_blank">https://citas.atizapan.gob.mx/</a>
+                            </li>
+                            <li><strong>Selecciona el trámite o servicio:</strong><br>
+                                Busca en el menú de opciones o utiliza el buscador.
+                            </li>
+                            <li><strong>Elige la fecha y hora de tu cita:</strong><br>
+                                Selecciona el calendario y la hora que mejor te convengan. El sistema te mostrará las fechas y horas disponibles para el trámite o servicio seleccionado.
+                            </li>
+                            <li><strong>Ingresa tus datos personales:</strong>
+                                <ul>
+                                    <li>Nombre completo</li>
+                                    <li>CURP</li>
+                                    <li>Correo electrónico</li>
+                                    <li>Teléfono</li>
+                                </ul>
+                            </li>
+                            <li><strong>Confirma tu cita:</strong>
+                                <ul>
+                                    <li>Revisa la información de tu cita y asegúrate de que sea correcta.</li>
+                                    <li>Haz clic en el botón "Agendar cita".</li>
+                                    <li>Recibirás un correo electrónico de confirmación con los detalles de tu cita.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Pregunta 6 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>6. ¿Qué debo hacer si no puedo asistir a mi cita?</span>
+                        <i class="faq-icon">+</i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Puedes cancelar o reprogramar tu cita a través del número de teléfono <a href="tel:+525536222765">55-36-22-27-65</a></p>
+                    </div>
+                </div>
+
+                <!-- Pregunta 7 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>7. ¿Qué debo hacer si olvidé mi contraseña para acceder al sistema?</span>
+                        <i class="faq-icon">+</i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Puedes recuperar tu contraseña a través del sitio web del sistema de citas.</p>
+                    </div>
+                </div>
+
+                <!-- Pregunta 8 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>8. ¿Qué puedo hacer si tengo problemas para acceder al sistema?</span>
+                        <i class="faq-icon">+</i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Puedes consultar el sitio web del sistema de citas o llamar al teléfono de atención al ciudadano: <a href="tel:+525536222800">55 3622 2800</a></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* 
+   FAQ Modal CSS Institucional Atizapán de Zaragoza
+   Solo colores institucionales: #4d4383, #6767a5, #56858d, #79b0cc, #b64f80, #585958 + blanco y negro
+*/
+
+.areas-grid {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.area-container {
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+
+.area-container:hover {
+    transform: scale(1.03);
+}
+
+.area-item {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #6767a5;
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.area-title {
+    color: #4d4383;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: block;
+    margin: 10px 0;
+}
+
+.hero-section {
+    text-align: center;
+    padding: 60px 20px 20px;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #4d4383;
+}
+
+.hero-subtitle {
+    font-size: 1.8rem;
+    color: #4d4383;
+}
+
+.creative-separator {
+    margin: 30px 0;
+    position: relative;
+    text-align: center;
+}
+
+.wave-separator {
+    height: 10px;
+    background: linear-gradient(to right, #6767a5 20%, transparent 20%, transparent 40%, #6767a5 40%, #6767a5 60%, transparent 60%, transparent 80%, #6767a5 80%);
+    background-size: 40px 10px;
+}
+
+.separator-text {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    padding: 0 10px;
+    font-weight: bold;
+    color: #4d4383;
+}
+
+.faq-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4d4383;
+    color: #ffffff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.faq-button:hover {
+    background-color: #6767a5;
+}
+
+/* Estilos del Modal con colores institucionales */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(77, 67, 131, 0.6);
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+.modal-container {
+    background: #ffffff;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 85vh;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    transform: scale(0.7);
+    transition: transform 0.3s ease;
+    border: 3px solid #79b0cc;
+}
+
+.modal-overlay.show .modal-container {
+    transform: scale(1);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #4d4383, #6767a5);
+    color: #ffffff;
+    padding: 25px 30px;
+    position: relative;
+    text-align: center;
+}
+
+.modal-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+.modal-subtitle {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-top: 5px;
+    color: #ffffff;
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 2rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.close-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal-content {
+    padding: 0;
+    max-height: calc(85vh - 100px);
+    overflow-y: auto;
+}
+
+.faq-accordion {
+    padding: 0;
+}
+
+.faq-item {
+    border-bottom: 1px solid #6767a5;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 20px 30px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #585958;
+    transition: background-color 0.3s;
+}
+
+.faq-question:hover {
+    background-color: #ffffff;
+    color: #4d4383;
+}
+
+.faq-question.active {
+    background-color: #ffffff;
+    color: #4d4383;
+}
+
+.faq-icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4d4383;
+    transition: transform 0.3s;
+}
+
+.faq-question.active .faq-icon {
+    transform: rotate(45deg);
+    color: #6767a5;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    background-color: #ffffff;
+}
+
+.faq-answer.show {
+    max-height: 1000px;
+    padding: 20px 30px;
+    border-left: 4px solid #79b0cc;
+}
+
+.faq-answer p {
+    margin: 0 0 15px 0;
+    line-height: 1.6;
+    color: #585958;
+}
+
+.faq-answer p:last-child {
+    margin-bottom: 0;
+}
+
+.faq-answer ul, .faq-answer ol {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.faq-answer li {
+    margin: 8px 0;
+    color: #585958;
+}
+
+.faq-answer a {
+    color: #4d4383;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.faq-answer a:hover {
+    text-decoration: underline;
+    color: #6767a5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-container {
+        width: 95%;
+        max-height: 90vh;
+    }
+
+    .modal-header {
+        padding: 20px;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+    }
+
+    .faq-question {
+        padding: 15px 20px;
+        font-size: 0.9rem;
+    }
+
+    .faq-answer.show {
+        padding: 15px 20px;
+    }
+}
+
+/* Scrollbar personalizado para el modal con colores institucionales */
+.modal-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #4d4383;
+    border-radius: 3px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #6767a5;
+}
+
+/* Mejoras adicionales con colores institucionales */
+.faq-answer strong {
+    color: #4d4383;
+}
+
+.faq-answer em {
+    color: #56858d;
+    font-style: normal;
+    font-weight: 600;
+}
+
+/* Estados de focus para accesibilidad */
+.faq-question:focus {
+    outline: 2px solid #79b0cc;
+    outline-offset: -2px;
+}
+
+.close-button:focus {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+/* Animaciones adicionales */
+.faq-item:hover {
+    background-color: rgba(121, 176, 204, 0.05);
+}
+
+/* Indicadores visuales mejorados */
+.faq-question::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: transparent;
+    transition: background 0.3s ease;
+}
+
+.faq-question.active::before {
+    background: #79b0cc;
+}
+
+/* Estilos para listas numeradas en las respuestas */
+.faq-answer ol {
+    counter-reset: item;
+    padding-left: 0;
+}
+
+.faq-answer ol li {
+    display: block;
+    margin-bottom: 0.5em;
+    padding-left: 2em;
+    position: relative;
+}
+
+.faq-answer ol li::before {
+    content: counter(item) ".";
+    counter-increment: item;
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #4d4383;
+    font-weight: bold;
+}
+
+/* Estilos para listas con viñetas */
+.faq-answer ul li::marker {
+    color: #56858d;
+}
+
+/* Separadores en las respuestas largas */
+.faq-answer hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #79b0cc, transparent);
+    margin: 20px 0;
+}
+
+/* Resaltado de texto importante */
+.faq-answer .highlight {
+    background: rgba(121, 176, 204, 0.1);
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: #4d4383;
+    font-weight: 600;
+}
+
+/* Código o elementos monospace */
+.faq-answer code {
+    background: rgba(103, 103, 165, 0.1);
+    color: #4d4383;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+/* Citas en las respuestas */
+.faq-answer blockquote {
+    border-left: 4px solid #56858d;
+    margin: 15px 0;
+    padding: 10px 20px;
+    background: rgba(86, 133, 141, 0.05);
+    font-style: italic;
+    color: #585958;
+}
+
+/* Tablas en las respuestas FAQ */
+.faq-answer table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    border: 1px solid #6767a5;
+}
+
+.faq-answer table th {
+    background: #4d4383;
+    color: #ffffff;
+    padding: 10px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.faq-answer table td {
+    padding: 10px;
+    border-bottom: 1px solid #6767a5;
+    color: #585958;
+}
+
+.faq-answer table tr:nth-child(even) {
+    background: rgba(121, 176, 204, 0.05);
+}
+
+.faq-answer table tr:hover {
+    background: rgba(121, 176, 204, 0.1);
+}
+
+/* Botones adicionales en las respuestas */
+.faq-answer .btn-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #4d4383;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 20px;
+    margin: 10px 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.faq-answer .btn-link:hover {
+    background: #6767a5;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Alertas informativas */
+.faq-answer .alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 15px 0;
+    border-left: 4px solid;
+}
+
+.faq-answer .alert-info {
+    background: rgba(121, 176, 204, 0.1);
+    border-left-color: #79b0cc;
+    color: #585958;
+}
+
+.faq-answer .alert-warning {
+    background: rgba(182, 79, 128, 0.1);
+    border-left-color: #b64f80;
+    color: #585958;
+}
+
+.faq-answer .alert-success {
+    background: rgba(86, 133, 141, 0.1);
+    border-left-color: #56858d;
+    color: #585958;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const faqButton = document.getElementById('faq-button');
+    const modal = document.getElementById('faq-modal');
+    const closeButton = document.getElementById('close-modal');
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    // Abrir modal
+    faqButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    });
+
+    // Cerrar modal
+    function closeModal() {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    closeButton.addEventListener('click', closeModal);
+
+    // Cerrar modal al hacer click fuera
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Cerrar modal con tecla Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+            closeModal();
+        }
+    });
+
+    // Accordion functionality
+    faqQuestions.forEach(function(question) {
+        question.addEventListener('click', function() {
+            const answer = this.nextElementSibling;
+            const isActive = this.classList.contains('active');
+
+            // Cerrar todas las respuestas
+            faqQuestions.forEach(function(q) {
+                q.classList.remove('active');
+                q.nextElementSibling.classList.remove('show');
+            });
+
+            // Si no estaba activa, abrir esta
+            if (!isActive) {
+                this.classList.add('active');
+                answer.classList.add('show');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

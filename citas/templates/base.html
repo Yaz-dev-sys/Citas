@@ -1,0 +1,102 @@
+<!-- templates/base.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Inicio | Sistema de Citas{% endblock %} - Atizapán de Zaragoza</title>
+    <link rel="stylesheet" href="{% static 'estilos/bases.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="{% static 'images/gotita.png' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header top bar -->
+    <div class="header-top">
+        <div class="header-left">
+            <button class="location-btn">
+                <i class="fas fa-map-marker-alt"></i> Ubicación
+            </button>
+        </div>
+        <div class="header-right">
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+    
+<!-- Logo section con enlace -->
+<div class="logo-container">
+    <a href="{% url 'inicio' %}">
+        <img src="{% static 'images/atizapan-logo-new.png' %}" alt="Atizapán de Zaragoza" class="logo">
+    </a>
+</div>
+
+    
+    <!-- Gradient bar after logo -->
+    <div class="gradient-bar"></div>
+    
+    <!-- Main content -->
+    <div class="main-content">
+        {% block content %}
+        <!-- Aquí va el contenido específico de cada vista -->
+        {% endblock %}
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column footer-logo-column">
+                <img src="{% static 'images/atizapan-logo-new.png' %}" alt="Logo Atizapán" class="footer-logo">
+                <div class="footer-socials">
+                    <a href="#" class="footer-social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="footer-social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="footer-social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="footer-social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Atizapán de Zaragoza</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#">Acerca del municipio</a></li>
+                    <li class="footer-link"><a href="#">Directorio</a></li>
+                    <li class="footer-link"><a href="#">Transparencia</a></li>
+                    <li class="footer-link"><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Servicios</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#">Trámites en línea</a></li>
+                    <li class="footer-link"><a href="#">Ventanilla única</a></li>
+                    <li class="footer-link"><a href="#">Atención ciudadana</a></li>
+                    <li class="footer-link"><a href="#">Pagos en línea</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Contáctanos</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><i class="fas fa-map-marker-alt"></i> Blvd. Adolfo López Mateos, Atizapán</li>
+                    <li class="footer-link"><i class="fas fa-phone"></i> (55) 1234-5678</li>
+                    <li class="footer-link"><i class="fas fa-envelope"></i> contacto@atizapan.gob.mx</li>
+                    <li class="footer-link"><i class="fas fa-clock"></i> Lun-Vie: 9:00 - 17:00</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 H. Ayuntamiento de Atizapán de Zaragoza. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,953 @@
+    {% extends "base.html" %}
+    {% load static %}
+
+    {% block title %}Detalles del Trámite{% endblock %}
+
+    {% block content %}
+    <section class="hero-section">
+        <div class="hero-texts">
+            <h1 class="hero-title">Datos del Trámite</h1>
+            <p class="hero-subtitle">{{ tramite.nombre_tramite }}</p>
+        </div>
+    </section>
+
+    <div class="services-section">
+        <div class="services-grid">
+
+    <div class="service-card" style="display: none;">
+        <h2 class="service-title">Área</h2>
+        <p class="service-description">{{ tramite.id_area }}</p>
+    </div>
+
+
+            <div class="service-card">
+                <h2 class="service-title">Área</h2>
+                <p class="service-description">{{ tramite.id_area.nombre_area }}</p>
+            </div>
+
+            <div class="service-card">
+                <h2 class="service-title">Descripción</h2>
+                <p class="service-description">{{ tramite.descripcion }}</p>
+            </div>
+
+            <div class="service-card">
+                <h2 class="service-title">Costo</h2>
+                <p class="service-description">${{ tramite.costo }}</p>
+            </div>
+        </div>
+    </div>
+
+      <!-- Sección que solo aparece si formato_descargable es true -->
+    {% if tramite.formato_descargable %}
+    <div class="formato-descargable-section">
+        <div class="formato-card">
+            <div class="formato-icon">
+                <i class="fas fa-download"></i>
+            </div>
+            <div class="formato-content">
+                <h3 class="formato-title">
+                    <i class="fas fa-file-pdf"></i>
+                    ¡Descarga tu Formato!
+                </h3>
+                <p class="formato-description">
+                    Formato descargable disponible. Llénalo previamente y preséntalo junto con tu documentación para agilizar tu trámite.
+                </p>
+                <div class="formato-benefits">
+                    <span class="benefit-tag">
+                        <i class="fas fa-clock"></i>
+                        Ahorra tiempo
+                    </span>
+                    <span class="benefit-tag">
+                        <i class="fas fa-check-circle"></i>
+                        Proceso más rápido
+                    </span>
+                </div>
+                <a href="{% static 'formatos/' %}{{ tramite.nombre_tramite }}.pdf" download class="download-btn">
+                    <i class="fas fa-download"></i>
+                    Descargar Formato
+                </a>
+            </div>
+            <div class="formato-decoration">
+                <div class="decoration-circle"></div>
+                <div class="decoration-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="gradient-divider"></div>
+
+    <section class="calendar-section">
+        <h2 class="section-title">Seleccione una Fecha y Hora</h2>
+        <p class="current-date" id="currentDate"></p>
+        
+        <div class="calendar-container">
+            <div id="calendar" class="calendar-grid"></div>
+            <div id="fecha-resultado" class="result-container">
+                Seleccione una fecha para ver la disponibilidad
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal simple para selección de hora -->
+    <div id="timeModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Seleccionar Hora</h3>
+                <button class="close-btn" id="closeModal">×</button>
+            </div>
+            <div class="modal-body">
+                <p id="selectedDateDisplay"></p>
+                <div class="time-slots" id="timeSlots"></div>
+                <button class="confirm-btn" id="confirmTime" disabled>Confirmar Cita</button>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block extra_css %}
+    <style>
+
+.formato-descargable-section {
+            margin: 2rem auto;
+            max-width: 800px;
+            padding: 0 1rem;
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .formato-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            color: white;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .formato-icon {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            font-size: 4rem;
+            opacity: 0.1;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .formato-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .formato-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .formato-title i {
+            color: #ffd700;
+            animation: pulse 2s infinite;
+        }
+
+        .formato-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+        }
+
+        .formato-benefits {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .benefit-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.6);
+            background: linear-gradient(45deg, #ff5252, #d63031);
+        }
+
+        .download-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .formato-decoration {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .decoration-circle {
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        .decoration-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .decoration-dots span {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        .decoration-dots span:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .decoration-dots span:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        /* Animaciones */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .formato-card {
+                padding: 1.5rem;
+            }
+
+            .formato-title {
+                font-size: 1.5rem;
+            }
+
+            .formato-description {
+                font-size: 1rem;
+            }
+
+            .benefit-tag {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .download-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .formato-benefits {
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .formato-descargable-section {
+                margin: 1rem auto;
+                padding: 0 0.5rem;
+            }
+
+            .formato-card {
+                padding: 1rem;
+            }
+
+            .benefit-tag {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .download-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        .services-section {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente */
+    height: 10vh;           /* Ocupa toda la altura de la ventana */
+    text-align: center;      /* Centra el texto dentro de los elementos */
+    }
+
+    .services-grid {
+    display: flex;
+    gap: 20px;               /* Espacio entre las tarjetas */
+    }
+
+    .service-card {
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    min-width: 200px;
+    }
+
+
+
+        .calendar-section {
+            padding: 2rem;
+            background: #f8fafc;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #1e40af;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .current-date {
+            text-align: center;
+            color: #3b82f6;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .calendar-btn {
+            padding: 1rem;
+            border: 2px solid #3b82f6;
+            border-radius: 8px;
+            background: white;
+            color: #1e40af;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .calendar-btn:hover {
+            background: #eff6ff;
+            border-color: #1e40af;
+        }
+        
+        .calendar-btn.today {
+            background: #dbeafe;
+            border-color: #1e40af;
+        }
+        
+        .calendar-btn.selected {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .day-name {
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .date-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .month-name {
+            font-size: 0.9rem;
+            display: block;
+        }
+        
+        .result-container {
+            padding: 1.5rem;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            text-align: center;
+            color: #374151;
+        }
+        
+        .result-container.available {
+            background: #f0fdf4;
+            border-color: #22c55e;
+            color: #15803d;
+        }
+        
+        .result-container.unavailable {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #dc2626;
+        }
+        
+        /* Modal simple */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            padding: 0;
+        }
+        
+        .modal-header {
+            background: #3b82f6;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 25px;
+            height: 25px;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        #selectedDateDisplay {
+            text-align: center;
+            font-weight: 500;
+            color: #1e40af;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: #eff6ff;
+            border-radius: 6px;
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .time-slot {
+            padding: 8px;
+            border: 1px solid #3b82f6;
+            border-radius: 6px;
+            background: white;
+            color: #1e40af;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .time-slot:hover {
+            background: #eff6ff;
+        }
+        
+        .time-slot.selected {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .time-slot.unavailable {
+            background: #f3f4f6;
+            color: #9ca3af;
+            cursor: not-allowed;
+            border-color: #d1d5db;
+        }
+        
+        .confirm-btn {
+            width: 100%;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .confirm-btn:hover:not(:disabled) {
+            background: #1e40af;
+        }
+        
+        .confirm-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .calendar-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .time-slots {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+    {% endblock %}
+
+    {% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const calendarEl = document.getElementById('calendar');
+        const resultado = document.getElementById('fecha-resultado');
+        const currentDateEl = document.getElementById('currentDate');
+        const timeModal = document.getElementById('timeModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const confirmTimeBtn = document.getElementById('confirmTime');
+        const selectedDateDisplay = document.getElementById('selectedDateDisplay');
+        const timeSlotsEl = document.getElementById('timeSlots');
+        
+        const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        
+        let selectedDate = null;
+        let selectedTime = null;
+
+        // Aquí guardamos las horas reales que vienen del backend
+        let horasDisponiblesDelServidor = [];
+
+        // Mostrar fecha actual
+        function updateCurrentDate() {
+            const now = new Date();
+            const dateStr = `Hoy: ${diasSemana[now.getDay()]}, ${now.getDate()} de ${meses[now.getMonth()]} de ${now.getFullYear()}`;
+            currentDateEl.textContent = dateStr;
+        }
+
+        // Crear calendario simple para 14 días
+        function createCalendar() {
+            calendarEl.innerHTML = '';
+            
+            for (let i = 0; i < 14; i++) {
+                const fecha = new Date();
+                fecha.setDate(fecha.getDate() + i);
+                const fechaStr = fecha.toISOString().split('T')[0];
+                const diaSemana = diasSemana[fecha.getDay()];
+                const diaMes = fecha.getDate();
+                const mes = meses[fecha.getMonth()];
+                
+                const btn = document.createElement('button');
+                btn.className = 'calendar-btn';
+                
+                const today = new Date().toISOString().split('T')[0];
+                if (fechaStr === today) {
+                    btn.classList.add('today');
+                }
+                
+                btn.innerHTML = `
+                    <span class="day-name">${diaSemana}</span>
+                    <span class="date-number">${diaMes}</span>
+                    <span class="month-name">${mes}</span>
+                `;
+                
+                btn.dataset.fecha = fechaStr;
+                btn.dataset.diaSemana = diaSemana;
+                btn.dataset.diaMes = diaMes;
+                btn.dataset.mes = mes;
+
+                btn.addEventListener('click', async () => {
+                    // Limpiar selección previa
+                    document.querySelectorAll('.calendar-btn.selected').forEach(el => {
+                        el.classList.remove('selected');
+                    });
+                    btn.classList.add('selected');
+                    
+                    resultado.textContent = "Consultando disponibilidad...";
+                    resultado.className = 'result-container';
+
+                    // Obtener id_area de tu HTML
+                    const areaId = document.querySelector('.service-description').textContent.trim();
+        
+                    try {
+                        const response = await fetch("{% url 'FechaDisponible' %}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": getCookie("csrftoken")
+                            },
+                            body: JSON.stringify({ 
+                                fecha: fechaStr,
+                                id_area: areaId
+                            })
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.disponible) {
+                            resultado.textContent = `Disponible: ${diaSemana} ${diaMes} de ${mes}`;
+                            resultado.className = 'result-container available';
+                            
+                            selectedDate = {
+                                fecha: fechaStr,
+                                diaSemana: diaSemana,
+                                diaMes: diaMes,
+                                mes: mes
+                            };
+
+                            // Guardamos horas reales disponibles
+                            horasDisponiblesDelServidor = data.horas_disponibles;
+
+                            showTimeModal();
+                        } else {
+                            resultado.textContent = `No disponible: ${diaSemana} ${diaMes} de ${mes}`;
+                            resultado.className = 'result-container unavailable';
+
+                            horasDisponiblesDelServidor = [];
+                        }
+                        
+                    } catch (error) {
+                        resultado.textContent = "Error al consultar disponibilidad";
+                        resultado.className = 'result-container unavailable';
+                        horasDisponiblesDelServidor = [];
+                    }
+                });
+
+                calendarEl.appendChild(btn);
+            }
+        }
+
+        function showTimeModal() {
+            selectedDateDisplay.textContent = `${selectedDate.diaSemana}, ${selectedDate.diaMes} de ${selectedDate.mes}`;
+            createTimeSlots();
+            timeModal.style.display = 'block';
+        }
+
+        // Aquí mostramos solo las horas que vienen del backend
+        function createTimeSlots() {
+            timeSlotsEl.innerHTML = '';
+            selectedTime = null;
+            confirmTimeBtn.disabled = true;
+
+            if (horasDisponiblesDelServidor.length === 0) {
+                timeSlotsEl.textContent = "No hay horas disponibles para esta fecha.";
+                return;
+            }
+
+            horasDisponiblesDelServidor.forEach(hour => {
+                const slot = document.createElement('div');
+                slot.className = 'time-slot';
+                slot.textContent = hour;
+
+                slot.addEventListener('click', () => {
+                    document.querySelectorAll('.time-slot.selected').forEach(el => {
+                        el.classList.remove('selected');
+                    });
+                    slot.classList.add('selected');
+                    selectedTime = hour;
+                    confirmTimeBtn.disabled = false;
+                });
+                
+                timeSlotsEl.appendChild(slot);
+            });
+        }
+
+        function closeModal() {
+            timeModal.style.display = 'none';
+            selectedTime = null;
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        
+        timeModal.addEventListener('click', (e) => {
+            if (e.target === timeModal) closeModal();
+        });
+
+        confirmTimeBtn.addEventListener('click', async () => {
+        if (selectedDate && selectedTime) {
+            const areaId = document.querySelector('.service-description').textContent.trim();
+            const nomarea = document.querySelectorAll('.service-description')[1].textContent.trim();
+            const tramiteNombre = document.querySelector('.hero-subtitle').textContent.trim();
+            const tramiteDescripcion = document.querySelectorAll('.service-description')[2].textContent.trim();
+            const tramiteCosto = document.querySelectorAll('.service-description')[3].textContent.trim();
+
+            const citaData = {
+                fecha: selectedDate.fecha,
+                hora: selectedTime,
+                id_area: areaId,
+                tramite_nombre: tramiteNombre,
+                tramite_descripcion: tramiteDescripcion,
+                tramite_costo: tramiteCosto
+            };
+
+            try {
+                const response = await fetch('/GuardarCita', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(citaData)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+
+    // Generar PDF
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Agregar logo
+    const logoUrl = window.location.origin + "{% static 'images/atizapan-logo-new.png' %}";
+
+    // Cargar imagen y generar PDF
+    const img = new Image();
+    img.src = logoUrl;
+
+    img.onload = function () {
+        // Logo
+        doc.addImage(img, 'PNG', 15, 7, 70, 20);
+
+        // Línea separadora
+        doc.setDrawColor(200);
+        doc.line(10, 35, 200, 35);
+
+        // Título
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(20);
+        doc.setTextColor(33, 37, 41); // Gris oscuro
+        doc.text('Comprobante de Cita', 105, 45, null, null, 'center');
+
+        // Subtítulo
+        doc.setFontSize(12);
+        doc.setTextColor(100, 100, 100);
+        doc.text('Gobierno Municipal de Atizapán de Zaragoza', 105, 52, null, null, 'center');
+
+        // Número de cita (NUEVO)
+        doc.setFontSize(14);
+        doc.line(10, 35, 200, 35);  // Línea divisoria en el PDF (santo de línea gráfico)
+        doc.setTextColor(70, 70, 70);
+        doc.text(`Número de cita: ${data.id_cita}`, 105, 55, null, null, 'center');
+        doc.line(10, 35, 200, 35);  // Línea divisoria en el PDF (santo de línea gráfico)
+        // Datos de la cita (bloque)
+        doc.setFontSize(12);
+        doc.setTextColor(0, 0, 0);
+        doc.setFont('helvetica', 'normal');
+
+        const startY = 65;
+        const lineHeight = 10;
+
+        doc.setFillColor(240, 240, 240);
+        doc.roundedRect(15, startY - 8, 180, 80, 3, 3, 'F');
+
+        doc.text(`• Trámite:`, 20, startY);
+        doc.setFont('helvetica', 'bold');
+        doc.text(tramiteNombre, 50, startY);
+
+        doc.setFont('helvetica', 'normal');
+        doc.text(`• Descripción:`, 20, startY + lineHeight);
+        doc.setFont('helvetica', 'bold');
+        doc.text(tramiteDescripcion, 50, startY + lineHeight);
+
+        doc.setFont('helvetica', 'normal');
+        doc.text(`• Costo:`, 20, startY + 2 * lineHeight);
+        doc.setFont('helvetica', 'bold');
+        doc.text(tramiteCosto, 50, startY + 2 * lineHeight);
+
+        doc.setFont('helvetica', 'normal');
+        doc.text(`• Área:`, 20, startY + 3 * lineHeight);
+        doc.setFont('helvetica', 'bold');
+        doc.text(nomarea, 50, startY + 3 * lineHeight);
+
+        doc.setFont('helvetica', 'normal');
+        doc.text(`• Fecha:`, 20, startY + 4 * lineHeight);
+        doc.setFont('helvetica', 'bold');
+        doc.text(`${selectedDate.diaSemana} ${selectedDate.diaMes} de ${selectedDate.mes}`, 50, startY + 4 * lineHeight);
+
+        doc.setFont('helvetica', 'normal');
+        doc.text(`• Hora:`, 20, startY + 5 * lineHeight);
+        doc.setFont('helvetica', 'bold');
+        doc.text(selectedTime, 50, startY + 5 * lineHeight);
+
+        // Línea decorativa inferior
+        doc.setDrawColor(180);
+        doc.line(10, 155, 200, 155);
+
+        // Pie de página
+        doc.setFont('helvetica', 'italic');
+        doc.setFontSize(10);
+        doc.setTextColor(100, 100, 100);
+        doc.text('Gracias por utilizar nuestros servicios', 105, 165, null, null, 'center');
+        doc.text('Gobierno de Atizapán de Zaragoza', 105, 172, null, null, 'center');
+
+        // Guardar PDF
+        const nombreArchivo = `Cita_${tramiteNombre.replace(/\s+/g, '_')}_${selectedDate.fecha}.pdf`;
+        doc.save(nombreArchivo);
+
+        // Notificación de éxito
+        Swal.fire({
+            icon: 'success',
+            title: 'Cita confirmada',
+            html: `<strong>${selectedDate.diaSemana} ${selectedDate.diaMes} de ${selectedDate.mes}</strong><br>a las <strong>${selectedTime}</strong><br><br>Se ha generado el comprobante PDF.`,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#3085d6'
+        });
+
+        // Mostrar resultado en pantalla
+        resultado.textContent = `Cita confirmada: ${selectedDate.diaSemana} ${selectedDate.diaMes} de ${selectedDate.mes} a las ${selectedTime}`;
+        resultado.className = 'result-container available';
+        closeModal();
+    };
+
+                } else {
+                    const errorData = await response.json();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error al guardar la cita',
+                        text: errorData.message || 'Inténtalo de nuevo más tarde',
+                        confirmButtonText: 'Aceptar',
+                        confirmButtonColor: '#d33'
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de conexión',
+                    text: 'No se pudo conectar con el servidor',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#d33'
+                });
+            }
+        }
+    });
+
+        // Función para obtener la cookie CSRF
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        updateCurrentDate();
+        createCalendar();
+    });
+
+    </script>
+    {% endblock %}

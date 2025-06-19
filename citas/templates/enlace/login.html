@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Iniciar Sesión | Sistema de Citas | Atizapán de Zaragoza{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Estilos específicos para el login */
+    .login-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 40px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* Distintivo de citas */
+    .citas-badge {
+        position: absolute;
+        top: 20px;
+        right: -40px;
+        background: linear-gradient(140deg, #662392 0%, #20a6db 100%);
+        color: white;
+        padding: 8px 40px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transform: rotate(45deg);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+    
+    .login-title {
+        color: #662392;
+        font-size: 2rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .login-subtitle {
+        color: #666;
+        font-size: 1rem;
+        margin-bottom: 30px;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .login-form .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .login-form label {
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+        font-weight: 500;
+    }
+    
+    .login-form input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+    
+    .login-form input:focus {
+        border-color: #662392;
+        box-shadow: 0 0 0 3px rgba(102, 35, 146, 0.1);
+        outline: none;
+    }
+    
+    .login-btn {
+        width: 100%;
+        background: linear-gradient(140deg, #662392 0%, #20a6db 100%);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        padding: 12px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+        margin-top: 10px;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .login-btn:hover {
+        transform: translateY(-2px);
+        opacity: 0.9;
+    }
+    
+    .login-links {
+        margin-top: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .login-links a {
+        color: #20a6db;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    
+    .login-links a:hover {
+        color: #662392;
+        text-decoration: underline;
+    }
+    
+    .login-separator {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+        color: #999;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .login-separator::before,
+    .login-separator::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .login-separator span {
+        padding: 0 10px;
+    }
+    
+    /* Fondo decorativo */
+    .login-decor {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: linear-gradient(140deg, rgba(102, 35, 146, 0.05) 0%, rgba(32, 166, 219, 0.05) 100%);
+        z-index: 0;
+    }
+    
+    .decor-1 {
+        top: -50px;
+        left: -50px;
+    }
+    
+    .decor-2 {
+        bottom: -30px;
+        right: -30px;
+        width: 150px;
+        height: 150px;
+    }
+    
+    /* Mensajes de error */
+    .error-message {
+        color: #e74c3c;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        text-align: left;
+    }
+    
+    /* Estilo para cuando hay errores en el campo */
+    .error-field {
+        border-color: #e74c3c !important;
+    }
+    
+    /* Responsive */
+    @media (max-width: 576px) {
+        .login-container {
+            padding: 30px 20px;
+            margin: 30px 15px;
+        }
+        
+        .login-title {
+            font-size: 1.8rem;
+        }
+        
+        .citas-badge {
+            right: -45px;
+            font-size: 0.8rem;
+            padding: 6px 35px;
+        }
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="login-container">
+    <h1 class="login-title">Iniciar Sesión</h1>
+    
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+    
+    <form method="post" class="login-form">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+        
+        <div class="form-group">
+            <label for="id_username">Usuario</label>
+            {{ form.username }}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_password">Contraseña</label>
+            {{ form.password }}
+        </div>
+        
+        <button type="submit" class="login-btn">Ingresar</button>
+    </form>
+</div>
+{% endblock %}

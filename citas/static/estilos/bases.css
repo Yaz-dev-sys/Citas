@@ -1,0 +1,808 @@
+/* 
+   CSS Institucional Atizapán de Zaragoza
+   Solo colores institucionales: #4d4383, #6767a5, #56858d, #79b0cc, #b64f80, #585958 + blanco y negro
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+}
+
+.location-btn {
+    position: relative;
+    top: 0px;
+    left: -40px;
+    background: linear-gradient(140deg, #4d4383 0%, #79b0cc 100%);
+    color: #ffffff;
+    border: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    padding: 15px 35px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.social-icons {
+    position: relative;
+    top: 0px;
+    right: -20px;
+    background: linear-gradient(140deg, #4d4383 0%, #79b0cc 100%);
+    color: #ffffff;
+    border: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    padding: 15px 32px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-left {
+    margin-left: 20px;
+}
+
+.header-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    z-index: 1000;
+    padding: 0 20px;
+}
+
+.location-btn i {
+    margin-right: 8px;
+}
+
+.header-right {
+    margin-right: 0px;
+}
+
+.social-icon {
+    color: #ffffff;
+    font-size: 18px;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+}
+
+/* Logo section */
+.logo-container {
+    text-align: center;
+    padding: 45px 0;
+    background-color: #ffffff;
+}
+
+.logo {
+    max-width: 350px;
+    height: auto;
+}
+
+/* Main content */
+.main-content {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Hero section */
+.hero-title {
+    color: #4d4383;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    font-weight: normal;
+}
+
+.hero-subtitle {
+    color: #4d4383;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    font-weight: normal;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 700px;
+    background-color: #ffffff;
+    border: 2px solid #6767a5;
+    border-radius: 30px;
+    display: flex;
+    padding: 5px;
+}
+
+.search-input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    outline: none;
+    color: #585958;
+}
+
+.search-input::placeholder {
+    color: #585958;
+}
+
+.search-btn {
+    background-color: #4d4383;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Servicios grid */
+.services-section {
+    margin-top: 40px;
+}
+
+.services-title {
+    color: #56858d;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.service-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    border: 1px solid #6767a5;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+    color: #56858d;
+}
+
+.service-title {
+    color: #56858d;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.service-description {
+    color: #585958;
+    font-size: 0.9rem;
+}
+
+.footer {
+    background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+    padding: 60px 20px 30px;
+    position: relative;
+    margin-top: 100px;
+    border-top: 5px solid #79b0cc;
+    color: #585958;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(90deg, #4d4383 0%, #6767a5 25%, #56858d 50%, #79b0cc 75%, #b64f80 100%);
+}
+
+/* Barra degradada institucional */
+.gradient-bar {
+    height: 20px;
+    background: linear-gradient(90deg, 
+        #4d4383 0%, 
+        #6767a5 20%, 
+        #56858d 40%, 
+        #79b0cc 60%, 
+        #b64f80 80%, 
+        #585958 100%);
+    width: 100%;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 40px;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 20px;
+}
+
+.footer-logo-column {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-logo {
+    max-width: 180px;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+    transition: transform 0.3s ease;
+}
+
+.footer-logo:hover {
+    transform: scale(1.05);
+}
+
+.footer-title {
+    color: #4d4383;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #4d4383, #79b0cc);
+    border-radius: 2px;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-link {
+    margin-bottom: 12px;
+    transition: transform 0.2s ease;
+}
+
+.footer-link:hover {
+    transform: translateX(5px);
+}
+
+.footer-link a {
+    color: #585958;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.footer-link a:hover {
+    color: #4d4383;
+    text-decoration: none;
+}
+
+.footer-link i {
+    margin-right: 10px;
+    color: #79b0cc;
+    width: 16px;
+    text-align: center;
+}
+
+.footer-column:nth-child(4) .footer-link i {
+    font-size: 1.1rem;
+}
+
+/* Agregar iconos a los enlaces */
+.footer-column:nth-child(2) .footer-link a::before,
+.footer-column:nth-child(3) .footer-link a::before {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 10px;
+    color: #79b0cc;
+    width: 16px;
+    text-align: center;
+}
+
+.footer-column:nth-child(2) .footer-link:nth-child(1) a::before { content: '\f015'; } /* Acerca del municipio */
+.footer-column:nth-child(2) .footer-link:nth-child(2) a::before { content: '\f2bb'; } /* Directorio */
+.footer-column:nth-child(2) .footer-link:nth-child(3) a::before { content: '\f573'; } /* Transparencia */
+.footer-column:nth-child(2) .footer-link:nth-child(4) a::before { content: '\f0e0'; } /* Contacto */
+
+.footer-column:nth-child(3) .footer-link:nth-child(1) a::before { content: '\f550'; } /* Trámites */
+.footer-column:nth-child(3) .footer-link:nth-child(2) a::before { content: '\f02d'; } /* Ventanilla */
+.footer-column:nth-child(3) .footer-link:nth-child(3) a::before { content: '\f4c4'; } /* Atención */
+.footer-column:nth-child(3) .footer-link:nth-child(4) a::before { content: '\f09d'; } /* Pagos */
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    margin-top: 40px;
+    border-top: 1px solid #6767a5;
+    font-size: 0.9rem;
+    color: #4d4383;
+}
+
+/* Añadir iconos de redes sociales en el primer bloque */
+.footer-socials {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.footer-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(140deg, #4d4383 0%, #79b0cc 100%);
+    color: #ffffff;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.footer-social-icon:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    
+    .footer-column {
+        flex: 100%;
+    }
+}
+
+.hero-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.hero-section {
+    padding: 50px;
+    margin-bottom: 50px;
+    max-width: 1200px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-texts {
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #4d4383;
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 3.5rem;
+    font-weight: 600;
+    color: #4d4383;
+    margin: 0;
+}
+
+/* Separador creativo */
+.creative-separator {
+    position: relative;
+    height: 100px;
+    width: 100%;
+    margin: 40px 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wave-separator {
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    background: #79b0cc;
+    clip-path: polygon(0% 0%, 12% 20%, 24% 0%, 36% 20%, 48% 0%, 60% 20%, 72% 0%, 84% 20%, 96% 0%, 100% 10%, 100% 100%, 0% 100%);
+}
+
+.separator-text {
+    position: relative;
+    z-index: 10;
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    margin-top: 15px;
+}
+
+/* NUEVO ESTILO PARA LAS ÁREAS DE TRÁMITE */
+.areas-section {
+    margin-bottom: 70px;
+}
+
+.areas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.area-item {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    border: 2px solid #6767a5;
+}
+
+.area-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    border-color: #4d4383;
+}
+
+.area-image {
+    width: 80%;
+    max-width: 200px;
+    height: auto;
+    margin: 0 auto;
+    transition: transform 0.3s ease;
+}
+
+.area-item:hover .area-image {
+    transform: scale(1.05);
+}
+
+.area-title {
+    color: #585958;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 15px;
+    display: block;
+    width: 100%;
+}
+
+/* NUEVO CÓDIGO PARA LA SECCIÓN DE GOBIERNO DIGITAL */
+.gobierno-digital {
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 60px;
+}
+
+.gobierno-digital h2 {
+    color: #4d4383;
+    font-size: 3rem;
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.gobierno-digital h3 {
+    color: #4d4383;
+    font-size: 3rem;
+    margin-top: 0;
+    font-weight: 600;
+}
+
+.servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-top: 60px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.servicio-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 350px; /* Altura fija para todos los elementos */
+    justify-content: flex-start; /* Alinea el contenido desde arriba */
+}
+
+.servicio-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 2px solid #6767a5;
+}
+
+.servicio-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.servicio-title {
+    color: #56858d;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.servicio-description {
+    color: #585958;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    flex-grow: 1; /* Esto hace que la descripción ocupe el espacio disponible */
+}
+
+.servicio-button {
+    margin-top: auto; /* Esto empuja el botón hacia abajo */
+    background: linear-gradient(140deg, #4d4383 0%, #79b0cc 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.servicio-button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+    background: linear-gradient(140deg, #6767a5 0%, #b64f80 100%);
+}
+
+.servicios-row-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 60px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.servicios-row-2 .servicio-item {
+    height: 300px; /* Puedes ajustar esta altura según necesites */
+}
+
+/* Línea horizontal con gradiente institucional */
+.gradient-divider {
+    height: 2px;
+    background: linear-gradient(90deg, 
+        rgba(77, 67, 131, 0) 0%, 
+        #4d4383 20%, 
+        #79b0cc 80%, 
+        rgba(121, 176, 204, 0) 100%);
+    width: 80%;
+    margin: 80px auto;
+}
+
+/* Responsive para la sección de gobierno digital */
+@media (max-width: 992px) {
+    .servicios-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .gobierno-digital h2,
+    .gobierno-digital h3 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .servicios-grid,
+    .servicios-row-2 {
+        grid-template-columns: 1fr;
+    }
+    
+    .gobierno-digital h2,
+    .gobierno-digital h3 {
+        font-size: 2rem;
+    }
+}
+
+.area-container {
+    text-decoration: none;
+}
+
+/* Botones y enlaces con colores institucionales */
+a, a:visited {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #6767a5;
+}
+
+/* Botones principales */
+.btn-primary {
+    background: linear-gradient(140deg, #4d4383 0%, #79b0cc 100%);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(140deg, #6767a5 0%, #b64f80 100%);
+    transform: translateY(-2px);
+}
+
+/* Botones secundarios */
+.btn-secondary {
+    background: #ffffff;
+    color: #4d4383;
+    border: 2px solid #4d4383;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #4d4383;
+    color: #ffffff;
+}
+
+/* Enlaces de navegación */
+.nav-link {
+    color: #585958;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #4d4383;
+}
+
+.nav-link.active {
+    color: #4d4383;
+    font-weight: 600;
+}
+
+/* Elementos destacados */
+.highlight {
+    background: linear-gradient(90deg, #4d4383, #79b0cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+}
+
+/* Bordes y líneas divisorias */
+.border-institutional {
+    border-color: #6767a5;
+}
+
+.divider-institutional {
+    border-top: 1px solid #6767a5;
+    margin: 20px 0;
+}
+
+/* Estados de focus para accesibilidad */
+*:focus {
+    outline: 2px solid #79b0cc;
+    outline-offset: 2px;
+}
+
+/* Alertas y mensajes */
+.alert-success {
+    background-color: #ffffff;
+    border-left: 4px solid #56858d;
+    color: #585958;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.alert-warning {
+    background-color: #ffffff;
+    border-left: 4px solid #79b0cc;
+    color: #585958;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.alert-error {
+    background-color: #ffffff;
+    border-left: 4px solid #b64f80;
+    color: #585958;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+/* Badges y etiquetas */
+.badge-primary {
+    background: #4d4383;
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.badge-secondary {
+    background: #6767a5;
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
