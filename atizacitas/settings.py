@@ -168,3 +168,4 @@ SESSION_COOKIE_SECURE = True  # Solo si estás usando HTTPS
 CSRF_COOKIE_SECURE = True     # Solo si estás usando HTTPS
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # La sesión se cierra al salir del navegador
 
+CSRF_TRUSTED_ORIGINS = ['http://*', 'https://citas-production-ad54.up.railway.app']
